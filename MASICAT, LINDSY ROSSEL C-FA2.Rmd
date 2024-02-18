@@ -1,0 +1,93 @@
+---
+title: "FORMATIVE ASSESSMENT 2"
+author: "Lindsy Rossel C. Masicat"
+date: "2024-02-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+
+## Question Number 2
+### An experiment consists of tossing two fair coins. Use R to simulate this experiment 100 times and obtain the relative frequency of each possible outcome. Hence, estimate the probability of getting one head and one tail in any order.
+
+```{r toss coin}
+
+number_of_tosses <- 100
+
+HT <- 0
+two_heads <- 0
+two_tails <- 0
+
+for (j in 1:number_of_tosses) {
+  c1 <- sample(c("H", "T"), 1, replace = TRUE)
+  c2 <- sample(c("H", "T"), 1, replace = TRUE)
+  
+  if (c1 == "H" && c2 == "T") {
+    HT <- HT + 1
+  } else if (c1 == "H" && c2 == "H") {
+    two_heads <- two_heads + 1
+  } else if (c1 == "T" && c2 == "T") {
+    two_tails <- two_tails + 1
+  }
+}
+
+cat("Number of times getting a one head and a one tail: " , HT, "\n")
+cat("Number of times getting two heads: " , two_heads, "\n")
+cat("Number of times getting two tails: " , two_tails, "\n")
+
+prob_HT <- HT / number_of_tosses
+prob_two_heads <- two_heads / number_of_tosses
+prob_two_tails <- two_tails / number_of_tosses
+
+cat("Probability of getting a one head and one tail:", prob_HT, "\n")
+```
+
+## Question Number 4
+### 4. Amy and Jane are gambling together. A fair coin is tossed repeatedly. Each time a head comes up, Amy wins two euro from Jane, and each time a tail comes up, Amy loses two euro to Jane. Use R to simulate this game 100 times, and estimate:
++ (a) the number of times that Amy is ahead in these 100 tosses;
++ (b) how much Amy has won or lost after 100 tosses.
+
+```{r fair toss coin}
+
+amy_wins <- 0
+amy_loses <- 0
+amy_winnings <- 0
+
+for (i in 1:100) {
+  toss <- sample(c("2", "-2"), 1)
+  cat(toss, "   ")
+  
+  if (toss == "2") {
+    amy_wins <- amy_wins + 1
+    amy_winnings <- amy_winnings + 2  # Amy wins 2 euro
+  } else {
+    amy_loses <- amy_loses + 1
+    amy_winnings <- amy_winnings - 2  # Amy loses 2 euro
+  }
+}
+
+amy_losses_total <- amy_loses * 2  # Amy loses 2 euro for each loss
+
+times_ahead <- ifelse(amy_wins > 0, 1, 0)
+
+cat("Number of times Amy is ahead in 100 tosses:", amy_wins, "\n")
+cat("Amy's number of loses after 100 tosses:", amy_loses, "\n")
+cat("Amy's earnings after 100 tosses:", amy_winnings, "euro\n")
+cat("Amy's total losses after 100 tosses:", amy_losses_total, "euro\n")
+
+
+```
+CONCLUSION
+```{r con}
+
+if (times_ahead == 1)
+{
+  cat("Amy wins", amy_winnings, "euro")
+}else{
+  cat("Amy lost ", amy_losses_total, "euro")
+}
+```
